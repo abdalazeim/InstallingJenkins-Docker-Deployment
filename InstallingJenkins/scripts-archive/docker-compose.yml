@@ -1,0 +1,45 @@
+# Jenkins Docker Deployment (standalone HTTP)
+# For HTTPS/domain access behind Traefik, use docker-compose.traefik.yml.
+#
+# Test on another machine:
+#   git clone https://github.com/abdalazeim/InstallingJenkins-Docker-Deployment.git
+#   cd InstallingJenkins-Docker-Deployment
+#   cp .env.example .env && chmod 600 .env
+#   docker compose config
+#   docker compose up -d
+#   docker exec jenkins cat /var/jenkins_home/secrets/initialAdminPassword
+
+name: jenkins-deployment
+
+services:
+  jenkins:
+    image: ${JENKINS_IMAGE:-jenkins/jenkins:lts-jdk21}
+    container_name: ${JENKINS_CONTAINER_NAME:-jenkins}
+    user: "${JENKINS_UID:-1000}:${JENKINS_GID:-1000}"
+    restart: unless-stopped
+    ports:
+      - "${JENKINS_HTTP_PORT:-8080}:8080"     # UI (standalone/testing)
+      - "${JENKINS_AGENT_PORT:-50000}:50000"  # inbound agents (restrict with firewall in production)
+    environment:
+      TZ: ${JENKINS_TZ:-UTC}
+    volumes:
+      - jenkins_home:/var/jenkins_home
+      # Trusted CI only: allows Jenkins jobs to run docker/docker compose on the host.
+      - /var/run/docker.sock:/var/run/docker.sock
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fsS http://localhost:8080/login >/dev/null || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 10
+      start_period: 90s
+    networks:
+      - jenkins_net
+
+networks:
+  jenkins_net:
+    name: jenkins_net
+    driver: bridge
+
+volumes:
+  jenkins_home:
+    name: jenkins_home

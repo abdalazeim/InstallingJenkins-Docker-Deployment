@@ -1,22 +1,26 @@
 # Odoo 17/19 Integration (separate from base Jenkins install)
 
-This folder contains **integration-only** assets for connecting Jenkins CI/CD to **Odoo 17** and **Odoo 19** (typically behind Traefik at `https://odoo17.devops-odoo.com` and `https://odoo19.devops-odoo.com`).
+This folder contains **integration-only** assets for connecting Jenkins CI/CD to **Odoo 17** and **Odoo 19** behind Traefik.
 
-Base Jenkins install remains in the repo root (`docker-compose*.yml`). Do **not** mix secrets here.
+| Target | URL |
+|---|---|
+| Odoo 17 | `https://odoo17.devops-odoo.com` |
+| Odoo 19 | `https://odoo19.devops-odoo.com` |
+
+Base Jenkins install remains in the repo root (`docker-compose.yml`, `docker-compose.traefik.yml`). **Do not store secrets here** — use Jenkins Credentials.
+
+## What to configure in Jenkins (UI)
+
+1. Install suggested plugins + Pipeline/Git plugins as needed.
+2. Add credentials (SCM, SSH deploy keys, tokens) in **Manage Jenkins → Credentials**.
+3. Create a Pipeline/Multibranch job pointing to your addon repository and use `IntegrationOdoo/pipelines/Jenkinsfile.odoo-addon.example` as a starting template (copy into the addon repo or reference a shared library).
+4. Set webhooks from your SCM to trigger builds.
 
 ## Structure
 
 | Path | Purpose |
 |---|---|
-| `odoo17/`, `odoo19/` | Non-secret integration env examples / notes per instance |
-| `pipelines/` | Example `Jenkinsfile` templates (adapt to your addon repos) |
-
-## Checklist before enabling pipelines
-
-- [ ] Jenkins reachable (standalone or `https://jenkins.devops-odoo.com` via Traefik)
-- [ ] Odoo 17/19 reachable and healthy
-- [ ] SCM credentials and deploy credentials stored in Jenkins Credentials
-- [ ] Staging target defined; production deploy requires approval
-- [ ] Backup/rollback plan for Odoo filestore/DB and addons
+| `odoo17/`, `odoo19/` | Non-secret integration env examples |
+| `pipelines/Jenkinsfile.odoo-addon.example` | Pipeline skeleton with Odoo17/19 targets |
 
 See [`../docs/ODOO_INTEGRATION.md`](../docs/ODOO_INTEGRATION.md).

@@ -1,0 +1,37 @@
+// Example Jenkins pipeline skeleton for Odoo addon CI/CD.
+// Copy/adapt per repository. Store secrets in Jenkins Credentials, not in this file.
+pipeline {
+  agent any
+  options { timestamps(); disableConcurrentBuilds() }
+  parameters {
+    choice(name: 'ODOO_TARGET', choices: ['odoo17', 'odoo19'], description: 'Target instance')
+  }
+  environment {
+    ODOO17_URL = 'https://odoo17.devops-odoo.com'
+    ODOO19_URL = 'https://odoo19.devops-odoo.com'
+  }
+  stages {
+    stage('Checkout') {
+      steps {
+        echo "Checkout addon source (configure SCM)"
+        // checkout scm
+      }
+    }
+    stage('Lint/Test') {
+      steps {
+        echo "Run lint/tests in an appropriate runner image (no secrets)"
+        // sh '...'
+      }
+    }
+    stage('Deploy (manual gate)') {
+      when { branch 'main' }
+      steps {
+        input message: "Deploy to ${params.ODOO_TARGET}?"
+        echo "Deploy step - implement using Jenkins Credentials + approved mechanism"
+      }
+    }
+  }
+  post {
+    always { echo "Done: ${params.ODOO_TARGET}" }
+  }
+}

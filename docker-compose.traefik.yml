@@ -1,0 +1,46 @@
+# Jenkins behind Traefik (HTTPS domain, no public host port for UI)
+# Prerequisites: Traefik running, external Docker network (proxy), DNS for JENKINS_DOMAIN.
+# Usage:
+#   cp .env.example .env && edit JENKINS_DOMAIN, CERTSRESOLVER=le, DOCKER_PROXY_NETWORK=proxy
+#   docker network create proxy || true
+#   docker compose -f docker-compose.traefik.yml up -d
+
+services:
+  jenkins:
+    image: ${JENKINS_IMAGE:-jenkins/jenkins:lts-jdk21}
+    container_name: ${JENKINS_CONTAINER_NAME:-jenkins}
+    user: "${JENKINS_UID:-1000}:${JENKINS_GID:-1000}"
+    restart: unless-stopped
+    environment:
+      TZ: ${JENKINS_TZ:-UTC}
+      # Helps Jenkins generate correct URLs when behind reverse proxy
+      JENKINS_OPTS: "--prefix=/"
+    volumes:
+      - jenkins_home:/var/jenkins_home
+      # Trusted CI only: enables pipelines to use docker/docker compose on the host.
+      - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      - jenkins_net
+      - proxy
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=${DOCKER_PROXY_NETWORK:-proxy}"
+      - "traefik.http.routers.jenkins.rule=Host(`${JENKINS_DOMAIN:-jenkins.devops-odoo.com}`)"
+      - "traefik.http.routers.jenkins.entrypoints=${TRAEFIK_ENTRYPOINT:-websecure}"
+      - "traefik.http.routers.jenkins.tls=true"
+      - "traefik.http.routers.jenkins.tls.certresolver=${CERTSRESOLVER:-le}"
+      - "traefik.http.routers.jenkins.service=jenkins"
+      - "traefik.http.services.jenkins.loadbalancer.server.port=8080"
+      # HTTP -> HTTPS redirect middleware name depends on Traefik dynamic config; optional if entrypoint redirect is global.
+
+networks:
+  jenkins_net:
+    name: jenkins_net
+    driver: bridge
+  proxy:
+    external: true
+    name: ${DOCKER_PROXY_NETWORK:-proxy}
+
+volumes:
+  jenkins_home:
+    name: jenkins_home

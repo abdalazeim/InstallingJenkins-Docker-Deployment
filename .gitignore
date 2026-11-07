@@ -1,21 +1,15 @@
-*.tmp
-bats/
-target/
-tests/functions/init.groovy.d/
-tests/functions/java_cp/
-tests/functions/copy_reference_file.log
-tests/**/work-*/
-manifest-tool
-multiarch/qemu-*
-multiarch/Dockerfile-*
-/docker.iml
-work-pester-jenkins-windows/
-/.idea/
+# Secrets - never commit
+.env
+*/.env
+**/.env
+!**/.env.example
+!**/.env.traefik.example
 
-/**/windows/**/jenkins.ps1
-/**/windows/**/jenkins-plugin-cli.ps1
-/**/windows/**/jenkins-support.psm1
+# Jenkins runtime data
+jenkins_home/
 
-build-windows_*.yaml
-
-tests/**/Dockerfile\.*
+# Logs / local
+*.log
+.DS_Store
+.vscode/
+.idea/

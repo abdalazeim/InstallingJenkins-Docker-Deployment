@@ -1,7 +1,7 @@
 # INSTALLATION_REPORT.md — Jenkins (المرحلة 1: التثبيت فقط)
 
 **التاريخ:** 2026-11-07  
-**النطاق:** `InstallingJenkins/01-Installation` فقط. **لا تكاملات منفذة** (Traefik/GitHub/Odoo/Ansible/Docker pipelines/CI/CD).  
+**النطاق:** `01-Installation` فقط. **لا تكاملات منفذة** (Traefik/GitHub/Odoo/Ansible/Docker pipelines/CI/CD).  
 **تنظيم:** إعادة هيكلة فقط — **لم تُحذف سكربتات/ملفات التثبيت القديمة** (محفوظة في `legacy/` و`scripts-archive/`).  
 **الحكم (Phase Gate):** **غير معتمد للانتقال للمرحلة 2.** لا اختبارات Docker حية ناجحة موثقة على Ubuntu/هدف Docker ⇒ **توقف عند المرحلة 1** (لا بدء تكامل تلقائيًا).
 

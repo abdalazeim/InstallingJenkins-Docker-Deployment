@@ -1,6 +1,6 @@
 # Jenkins Official Docker Image — Clear Reference Guide
 
-> **Scope:** This is a clear, practical reference based on the official `jenkins/jenkins` Docker image documentation. It is **reference material** for the phased deployment in this repository (`../README.md`, Phase 1 in `../01-Installation/`). **Do not run ad-hoc commands in production without review.** For this project’s gated workflow, use Phase 1 first and record actual test evidence in `../INSTALLATION_REPORT.md`.
+> **Scope:** This is a clear, practical reference based on the official `jenkins/jenkins` Docker image documentation. It is **reference material** for the phased deployment in this repository (`README.md`, Phase 1 in `01-Installation/`). **Do not run ad-hoc commands in production without review.** For this project's gated workflow, use Phase 1 first and record actual test evidence in `INSTALLATION_REPORT.md`.
 
 ## Image
 - Docker Hub: https://hub.docker.com/r/jenkins/jenkins/
@@ -16,7 +16,7 @@ docker run -p 8080:8080 -p 50000:50000 --restart=on-failure jenkins/jenkins:lts-
 - `8080` — Jenkins web UI.
 - `50000` — inbound TCP agent port (see [Agents](#5-agents-and-port-50000)). Not needed for SSH-only/outbound or websocket agents; **do not expose publicly** unless required and secured.
 - `--restart=on-failure` (or `unless-stopped`) helps the controller recover.
-- If you see *“This Jenkins instance appears to be offline.”* on first boot, check [DNS configuration](#9-dns-troubleshooting-offline-on-first-boot).
+- If you see *"This Jenkins instance appears to be offline."* on first boot, check [DNS configuration](#9-dns-troubleshooting-offline-on-first-boot).
 
 ## 2) Persistent data (`JENKINS_HOME` = `/var/jenkins_home`)
 
@@ -42,7 +42,7 @@ docker exec <jenkins_container_id_or_name> cat /var/jenkins_home/secrets/initial
 ```
 
 Then complete the setup wizard (Jenkins install guide): https://www.jenkins.io/doc/book/installing/docker/#setup-wizard  
-In this repo’s Phase 1, create the admin, secure access, and **do not** configure integrations yet.
+In this repo's Phase 1, create the admin, secure access, and **do not** configure integrations yet.
 
 ## 4) Backups (treat `jenkins_home` like a database)
 
@@ -53,7 +53,7 @@ In this repo’s Phase 1, create the admin, secure access, and **do not** config
 
 ## 5) Agents and port `50000`
 
-- **Recommendation:** do not run builds on the controller’s built-in node (set executors to `0`; see below). Use agents.
+- **Recommendation:** do not run builds on the controller's built-in node (set executors to `0`; see below). Use agents.
 - **Inbound TCP agents:** publish `-p 50000:50000` (or your configured agent port).
 - **SSH (outbound) agents:** controller connects out; inbound 50000 not required.
 - **WebSocket agents:** TCP agent port not used.
@@ -102,7 +102,7 @@ docker run --name myjenkins -p 8080:8080 -p 50000:50000 --restart=on-failure \
 
 For user access logs, you can set `JENKINS_OPTS` with an access logger (see official docs); write logs under `/var/jenkins_home/logs/` as appropriate.
 
-## 9) DNS troubleshooting (“offline” on first boot)
+## 9) DNS troubleshooting ("offline" on first boot)
 
 If logs show `java.net.UnknownHostException: updates.jenkins.io`, provide DNS servers:
 
@@ -122,7 +122,7 @@ Run Jenkins behind a reverse proxy with a prefix (example `/jenkins`):
 -e JENKINS_OPTS="--prefix=/jenkins"
 ```
 
-Configure the proxy (Apache/Nginx) per Jenkins docs and set the correct Jenkins URL in system configuration. For HTTPS termination/proxying (e.g., Traefik in this repo’s Phase 2), follow the approved, reviewed config and do not modify shared Traefik without approval.
+Configure the proxy (Apache/Nginx) per Jenkins docs and set the correct Jenkins URL in system configuration. For HTTPS termination/proxying (e.g., Traefik in this repo's Phase 2), follow the approved, reviewed config and do not modify shared Traefik without approval.
 
 ## 11) Jenkins launcher arguments and agent port env
 
@@ -175,7 +175,7 @@ volumes:
   jenkins_home:
 ```
 
-This repository’s **gated, organized** Compose + scripts live in `../01-Installation/` (Phase 1 only). Use that path for `/opt/InstallingJenkins` deployments and record evidence in `../INSTALLATION_REPORT.md`.
+This repository's **gated, organized** Compose + scripts live in `01-Installation/` (Phase 1 only). Use that path for `/opt/InstallingJenkins` deployments and record evidence in `INSTALLATION_REPORT.md`.
 
 ## 15) Upgrading Jenkins and plugins
 
@@ -184,9 +184,9 @@ This repository’s **gated, organized** Compose + scripts live in `../01-Instal
 - **Plugin list updates:** can be generated via `jenkins-plugin-cli` workflows (review diffs before applying).
 
 ## 16) Project-specific notes (this repo)
-- **Phase 1:** `../01-Installation/` — install only (no Traefik/GitHub/Odoo/Ansible/docker.sock). Gate: `../INSTALLATION_REPORT.md`.
-- **Phase 2/3:** `../02-Integration/`, `../03-CICD/` — sequential, tested, evidence in `TEST_REPORT.md`; no production DB/module upgrades without explicit approval + restorable backup.
-- **Legacy preserved:** `../legacy/`, `../scripts-archive/` — not deleted.
+- **Phase 1:** `01-Installation/` — install only (no Traefik/GitHub/Odoo/Ansible/docker.sock). Gate: `INSTALLATION_REPORT.md`.
+- **Phase 2/3:** `02-Integration/`, `03-CICD/` — sequential, tested, evidence in `TEST_REPORT.md`; no production DB/module upgrades without explicit approval + restorable backup.
+- **Legacy preserved:** `legacy/`, `scripts-archive/` — not deleted.
 
 ## References
 - https://www.jenkins.io/doc/book/installing/docker/

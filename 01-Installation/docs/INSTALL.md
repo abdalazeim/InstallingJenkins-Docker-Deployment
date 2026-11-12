@@ -2,7 +2,7 @@
 
 ÇáÊÔÛíá Úáì Ubuntu ÇáåÏİ (ãËÇá `/opt/jenkins/01-Installation` Ãæ ãä åĞÇ ÇáãÓÇÑ ÈÚÏ ÇáäÓÎ):
 ```bash
-cd InstallingJenkins/01-Installation
+cd 01-Installation
 cp .env.example .env && chmod 600 .env
 # ÑÇÌÚ JENKINS_HTTP_PORT/JENKINS_AGENT_PORT æÊÚÇÑÖ ÇáãäÇİĞ
 bash scripts/preflight.sh

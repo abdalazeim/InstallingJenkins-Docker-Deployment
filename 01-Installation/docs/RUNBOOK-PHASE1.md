@@ -3,7 +3,7 @@
 
 ## ÃæÇãÑ
 ```bash
-cd InstallingJenkins/01-Installation
+cd 01-Installation
 bash scripts/preflight.sh                 # ÑÇÌÚ: Jenkins ÓÇÈŞ/ÈíÇäÇÊ¡ ãäÇİĞ¡ ÔÈßÇÊ. áÇ ÊÍĞİ volumes.
 cp .env.example .env && chmod 600 .env     # ÚÏøá JENKINS_HTTP_PORT/JENKINS_AGENT_PORT/TZ ÚäÏ ÇáÊÚÇÑÖ
 docker compose config

@@ -8,7 +8,10 @@
 
 services:
   jenkins:
-    image: ${JENKINS_IMAGE:-jenkins/jenkins:lts-jdk21}
+    build:
+      context: ../04-Plugins-AutoInstall
+      dockerfile: Dockerfile
+    image: jenkins-with-plugins:latest
     container_name: ${JENKINS_CONTAINER_NAME:-jenkins}
     user: "${JENKINS_UID:-1000}:${JENKINS_GID:-1000}"
     restart: unless-stopped

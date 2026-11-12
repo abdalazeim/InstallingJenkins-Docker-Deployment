@@ -28,3 +28,8 @@ bash scripts/verify.sh                                                   # يح�
 - [ ] `INSTALLATION_REPORT.md` محدث بالنتائج الفعلية.
 
 **عند الفشل:** توقف، أصلح، أعد الاختبار. **لا تبدأ `02-Integration/` قبل تحقق كل البنود.**
+
+## مراجع إضافية
+- **قائمة الإضافات:** [`../plugins.txt`](../plugins.txt)
+- **دليل تثبيت وتكامل الإضافات (المرحلة أ + ب):** [`../PLUGINS-INSTALLATION-GUIDE.md`](../PLUGINS-INSTALLATION-GUIDE.md)
+- **التثبيت التلقائي:** [`../../04-Plugins-AutoInstall/README.md`](../../04-Plugins-AutoInstall/README.md)

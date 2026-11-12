@@ -15,3 +15,9 @@ bash scripts/verify.sh   # يلتقط أدلة للتقرير
 - البيانات دائمة في volume `jenkins_home`. **لا تحذف** الحاوية/الـ volume.
 - قيّد المنفذ `50000` بجدار ناري؛ لا تعرض Jenkins للإنترنت دون حماية (المرحلة 2/Traefik لاحقًا بعد نجاح التثبيت).
 - بعد الاختبارات الفعلية: حدّث `INSTALLATION_REPORT.md`. **لا تنتقل للمرحلة 2 إلا بنجاح موثق.**
+
+## مراجع المرحلة 1
+
+- **قائمة الإضافات (Plugin IDs):** [`../plugins.txt`](../plugins.txt) — 24 معرّف إضافة رسمي.
+- **دليل تثبيت وتكامل الإضافات الكامل:** [`../PLUGINS-INSTALLATION-GUIDE.md`](../PLUGINS-INSTALLATION-GUIDE.md) — يغطي التثبيت عبر واجهة Jenkins (المرحلة أ) والتكوين/التكامل (المرحلة ب).
+- **التثبيت التلقائي عبر Docker:** [`../../04-Plugins-AutoInstall/README.md`](../../04-Plugins-AutoInstall/README.md) — بناء صورة مشتقة مع `jenkins-plugin-cli`.

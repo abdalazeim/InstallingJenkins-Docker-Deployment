@@ -8,9 +8,12 @@ This repository provides a **clear, phased** way to deploy Jenkins with Docker o
 Use the phased package at the repository root:  
 - Main guide (all steps, `/opt/InstallingJenkins`, gates): [`README.md`](README.md)
 - Phase 1 install (Docker Compose, scripts, runbook): [`01-Installation/`](01-Installation/)
+- **Phase 1 plugin list (24 official Plugin IDs):** [`01-Installation/plugins.txt`](01-Installation/plugins.txt)
+- **Phase 1 plugin installation & integration guide (Arabic):** [`01-Installation/PLUGINS-INSTALLATION-GUIDE.md`](01-Installation/PLUGINS-INSTALLATION-GUIDE.md)
 - Phase 1 gate report (record **actual** evidence): [`INSTALLATION_REPORT.md`](INSTALLATION_REPORT.md)
 - Phase 2 integrations (gated): [`02-Integration/`](02-Integration/)
 - Phase 3 CI/CD (gated): [`03-CICD/`](03-CICD/)
+- **Auto-install Jenkins plugins (Docker build):** [`04-Plugins-AutoInstall/`](04-Plugins-AutoInstall/)
 - Official Jenkins Docker reference (English, clear): [`docs/OFFICIAL-JENKINS-DOCKER-REFERENCE.md`](docs/OFFICIAL-JENKINS-DOCKER-REFERENCE.md)
 
 ## Quick start — Phase 1 only (Ubuntu + Docker)
@@ -73,9 +76,17 @@ bash scripts/verify.sh
 | **1. Installation** | Stable Jenkins LTS in Docker (`jenkins_home` named volume, restart, healthcheck; no Traefik/GitHub/Odoo/Ansible/docker.sock) | Must PASS with actual evidence in `INSTALLATION_REPORT.md` before Phase 2 |
 | **2. Integration** (sequential) | `github → docker (security review first) → ansible → traefik (https://jenkins.devops-odoo.com; no shared Traefik edits without review/approval) → odoo17 → odoo19` | One at a time; independent tests + `TEST_REPORT.md` per integration |
 | **3. CI/CD** | Separate pipelines per project/env/Odoo version (17/19 isolated) | After Phase 2 PASS; **Manual Approval** before production; no auto production DB/module upgrade |
+| **4. Plugins Auto-Install** | Install 24 plugins (Git, Pipeline, Docker, Ansible, SonarQube, Roles, CoC, etc.) via `jenkins-plugin-cli` in a derived image | After Phase 1 PASS; see [`04-Plugins-AutoInstall/`](04-Plugins-AutoInstall/) |
+
+## Official Jenkins Docker image (reference summary)
+This project deploys the official image (default `jenkins/jenkins:lts-jdk21`). Core practices reflected in Phase 1: named volume for `/var/jenkins_home`, `8080` UI / `50000` inbound agents only when needed (restrict exposure), restart policy, health checks, initial password from `/var/jenkins_home/secrets/initialAdminPassword`, and volume-based backups.  
+Full, clear reference: [`docs/OFFICIAL-JENKINS-DOCKER-REFERENCE.md`](docs/OFFICIAL-JENKINS-DOCKER-REFERENCE.md). Upstream: https://hub.docker.com/r/jenkins/jenkins · https://www.jenkins.io/doc/book/installing/docker/ · https://github.com/jenkinsci/docker
+
+## Auto-install Jenkins plugins (Phase 4)
+Instead of manually installing plugins through the Jenkins UI, use [`04-Plugins-AutoInstall/`](04-Plugins-AutoInstall/) to build a derived image with 24 plugins (Git, Pipeline, Docker, Ansible, SonarQube, Roles, CoC, etc.) via `jenkins-plugin-cli`. This is the recommended, reproducible approach — see the full guide there.
 
 ## Key rules
-- Keep install and integration separate; all organized work at the repository root (`01-Installation/`, `02-Integration/`, `03-CICD/`).
+- Keep install and integration separate; all organized work at the repository root (`01-Installation/`, `02-Integration/`, `03-CICD/`, `04-Plugins-AutoInstall/`).
 - **Never delete** data, files, volumes, or old scripts. No secrets in Git (`.env` ignored).
 - No shared Odoo/Traefik changes without review/approval. No automatic production deploy or DB/Odoo module upgrade without explicit approval + a verified, restorable backup.
 - **Never claim an unexecuted test passed** — record real commands/output.
@@ -83,10 +94,6 @@ bash scripts/verify.sh
 ## Legacy / preserved material
 - `legacy/` and `scripts-archive/` — preserved previous deployment scripts, compose examples, docs, IntegrationOdoo examples, and upstream reference (`jenkins.sh`, `jenkins-plugin-cli.sh`, `jenkins-support`; recoverable via `git show 5169a68:<path>` from repo history).
 - Existing root-level files (if any) remain kept as part of preservation/organization context; use the phased root-level layout for new/organized execution.
-
-## Official Jenkins Docker image (reference summary)
-This project deploys the official image (default `jenkins/jenkins:lts-jdk21`). Core practices reflected in Phase 1: named volume for `/var/jenkins_home`, `8080` UI / `50000` inbound agents only when needed (restrict exposure), restart policy, health checks, initial password from `/var/jenkins_home/secrets/initialAdminPassword`, and volume-based backups.  
-Full, clear reference: [`docs/OFFICIAL-JENKINS-DOCKER-REFERENCE.md`](docs/OFFICIAL-JENKINS-DOCKER-REFERENCE.md). Upstream: https://hub.docker.com/r/jenkins/jenkins · https://www.jenkins.io/doc/book/installing/docker/ · https://github.com/jenkinsci/docker
 
 ---
 Repository: https://github.com/abdalazeim/InstallingJenkins-Docker-Deployment

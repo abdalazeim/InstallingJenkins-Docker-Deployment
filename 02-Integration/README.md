@@ -11,3 +11,7 @@
 6. **Odoo 19** (`odoo19/`) ó ≈⁄œ«œ „” ﬁ·.
 
 ·ﬂ·  ﬂ«„· √‰‘∆: `README.md` („Õœ¯À »«·‰ «∆Ã)° „·›«  compose/env.example/scripts/Jenkinsfile snippets Õ”» «·Õ«Ã…° Ê`TEST_REPORT.md` »‰ «∆Ã ›⁄·Ì…. ·« √”—«— ›Ì Git. ·« ‰‘—/ —ﬁÌ… DB ≈‰ «Ã  ·ﬁ«∆Ì«.
+
+## „—«Ã⁄ ≈÷«›Ì…
+- **œ·Ì·  À»Ì  Ê ﬂ«„· «·≈÷«›«  («·„—Õ·… » ó «· ﬂ«„·):** [`../01-Installation/PLUGINS-INSTALLATION-GUIDE.md`](../01-Installation/PLUGINS-INSTALLATION-GUIDE.md) ó √ﬁ”«„ „›’·… ·ﬂ·  ﬂ«„· (GitHub° Docker° Ansible° SonarQube° SSH Agents° Email° Role Strategy° JCasC° Reports).
+- **ﬁ«∆„… «·≈÷«›« :** [`../01-Installation/plugins.txt`](../01-Installation/plugins.txt)

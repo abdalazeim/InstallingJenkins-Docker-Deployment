@@ -13,26 +13,42 @@ Use the phased package at the repository root:
 - Phase 3 CI/CD (gated): [`03-CICD/`](03-CICD/)
 - Official Jenkins Docker reference (English, clear): [`docs/OFFICIAL-JENKINS-DOCKER-REFERENCE.md`](docs/OFFICIAL-JENKINS-DOCKER-REFERENCE.md)
 
-## Quick start — Phase 1 only (Ubuntu + Docker, `/opt`)
-> Do not overwrite an existing target that contains data. Complete Phase 1 and record evidence before any integration.
+## Quick start — Phase 1 only (Ubuntu + Docker)
+
+Run these commands **on the target server** (e.g. Ubuntu) inside the `01-Installation` folder:
 
 ```bash
-# Copy/clone this repo to the target
-sudo git clone https://github.com/abdalazeim/InstallingJenkins-Docker-Deployment.git /opt/InstallingJenkins-src
-sudo cp -a /opt/InstallingJenkins-src /opt/InstallingJenkins
-# or: sudo bash 01-Installation/scripts/deploy-to-opt.sh /opt/InstallingJenkins
+# 1) Get the updated files (choose one)
+# Option A: if the repo is already cloned on the server
+cd /opt/Jenkins--Deployment/01-Installation
+git pull origin main
 
-cd /opt/InstallingJenkins/01-Installation
+# Option B: clone fresh and copy only the 01-Installation folder
+sudo git clone https://github.com/abdalazeim/InstallingJenkins-Docker-Deployment.git /opt/InstallingJenkins-src
+sudo cp -a /opt/InstallingJenkins-src/01-Installation /opt/Jenkins--Deployment/01-Installation
+
+cd /opt/Jenkins--Deployment/01-Installation
+
+# 2) Make scripts executable and configure
 chmod +x scripts/*.sh
-cp .env.example .env && chmod 600 .env          # NEVER commit .env
-bash scripts/preflight.sh                        # review existing Jenkins/ports — NO deletions
-docker compose config && docker compose up -d
+cp .env.example .env && chmod 600 .env   # NEVER commit .env
+
+# 3) Preflight — review existing Jenkins/ports/networks, NO deletions
+bash scripts/preflight.sh
+
+# 4) Start Jenkins
+docker compose config
+docker compose up -d
 sleep 20 && docker compose ps
+
+# 5) First access — complete Setup Wizard via browser (trusted network/VPN), create admin
 docker exec jenkins curl -fsS http://localhost:8080/login >/dev/null && echo UI_OK
-docker exec jenkins cat /var/jenkins_home/secrets/initialAdminPassword  # first run only
-# Complete Setup Wizard (trusted network/VPN), create admin — no Phase 2/3 integrations yet
-bash scripts/verify.sh                           # writes verify-output.txt (restart + jenkins_home persistence)
-# Fill actual evidence in /opt/InstallingJenkins/INSTALLATION_REPORT.md — PASS required before Phase 2
+docker exec jenkins cat /var/jenkins_home/secrets/initialAdminPassword   # first run only
+
+# 6) Verify — restart persistence + jenkins_home + logs (writes verify-output.txt)
+bash scripts/verify.sh
+
+# 7) Record actual evidence in INSTALLATION_REPORT.md — PASS required before Phase 2
 ```
 
 ## Phased workflow (same idea throughout)

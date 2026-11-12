@@ -1,4 +1,4 @@
-# Jenkins Installation — Phase 1 only (standalone). No Traefik/GitHub/Odoo/Ansible/Docker-pipeline integrations.
+# Jenkins Installation â€” Phase 1 only (standalone). No Traefik/GitHub/Odoo/Ansible/Docker-pipeline integrations.
 # Test on Ubuntu:
 #   cd 01-Installation
 #   cp .env.example .env && chmod 600 .env

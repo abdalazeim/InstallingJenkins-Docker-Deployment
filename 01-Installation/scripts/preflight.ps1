@@ -1,4 +1,4 @@
-# Phase 1 preflight (Windows host) — run from 01-Installation on target Ubuntu for full checks
+# Phase 1 preflight (Windows host) â€” run from 01-Installation on target Ubuntu for full checks
 $ErrorActionPreference = 'Continue'
 Write-Output "=== OS ==="; systeminfo | Select-String 'OS Name|OS Version|System Type' | Select-Object -First 5
 Write-Output "`n=== Docker/Compose ==="; docker --version 2>&1; docker compose version 2>&1

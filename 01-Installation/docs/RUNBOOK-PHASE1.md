@@ -1,30 +1,30 @@
-# วแใัอแษ 1 — สิÛํแ Ýฺแํ ฺแ์ Ubuntu (ลแาวใํ แวฺสใวฯ วแสหศํส)
-> **วแอวแษ:** แใ ส๕ไÝะ วฮสศวัวส Docker อํษ ใไ ศํฦษ วแฺใแ วแอวแํษ. ไÝ๘ะ วแรๆวใั รฯไวๅ ฺแ์ Ubuntu วแๅฯÝก หใ อฯ๘ห `../../INSTALLATION_REPORT.md` ศวแฮัฬ วแÝฺแํ.
+# ุงูู…ุฑุญูุฉ 1 โ€” ุชุดุบูู ูุนูู ุนูู Ubuntu (ุฅูุฒุงู…ู ูุงุนุชู…ุงุฏ ุงูุชุซุจูุช)
+> **ุงูุญุงูุฉ:** ูู… ุชูููุฐ ุงุฎุชุจุงุฑุงุช Docker ุญูุฉ ู…ู ุจูุฆุฉ ุงูุนู…ู ุงูุญุงููุฉ. ููู‘ุฐ ุงูุฃูุงู…ุฑ ุฃุฏูุงู ุนูู Ubuntu ุงููุฏูุ ุซู… ุญุฏู‘ุซ `../../INSTALLATION_REPORT.md` ุจุงูุฎุฑุฌ ุงููุนูู.
 
-## รๆวใั
+## ุฃูุงู…ุฑ
 ```bash
 cd 01-Installation
-bash scripts/preflight.sh                 # ัวฬฺ: Jenkins ำวศÞ/ศํวไวสก ใไวÝะก ิศ฿วส. แว สอะÝ volumes.
-cp .env.example .env && chmod 600 .env     # ฺฯ๘แ JENKINS_HTTP_PORT/JENKINS_AGENT_PORT/TZ ฺไฯ วแสฺวัึ
+bash scripts/preflight.sh                 # ุฑุงุฌุน: Jenkins ุณุงุจู/ุจูุงูุงุชุ ู…ูุงูุฐุ ุดุจูุงุช. ูุง ุชุญุฐู volumes.
+cp .env.example .env && chmod 600 .env     # ุนุฏู‘ู JENKINS_HTTP_PORT/JENKINS_AGENT_PORT/TZ ุนูุฏ ุงูุชุนุงุฑุถ
 docker compose config
 docker compose up -d
 sleep 20 && docker compose ps
 docker exec jenkins curl -fsS http://localhost:8080/login >/dev/null && echo UI_OK
-docker exec jenkins cat /var/jenkins_home/secrets/initialAdminPassword   # รๆแ สิÛํแ
-# ร฿ใแ Setup Wizard ใไ วแใสีÝอ (ิศ฿ษ ใๆหๆÞษ/VPN)ก รไิฦ adminก แว สหศส ลึวÝวส ส฿วใแ วแยไ.
-docker compose restart && sleep 20 && docker compose ps                   # วำสใัวั ศํวไวส
+docker exec jenkins cat /var/jenkins_home/secrets/initialAdminPassword   # ุฃูู ุชุดุบูู
+# ุฃูู…ู Setup Wizard ู…ู ุงูู…ุชุตูุญ (ุดุจูุฉ ู…ูุซููุฉ/VPN)ุ ุฃูุดุฆ adminุ ูุง ุชุซุจุช ุฅุถุงูุงุช ุชูุงู…ู ุงูุขู.
+docker compose restart && sleep 20 && docker compose ps                   # ุงุณุชู…ุฑุงุฑ ุจูุงูุงุช
 docker volume inspect jenkins_home
-docker compose logs --tail=100 jenkins                                   # แว รฮุวม อัฬษ
-bash scripts/verify.sh                                                   # ํอÝู verify-output.txt
+docker compose logs --tail=100 jenkins                                   # ูุง ุฃุฎุทุงุก ุญุฑุฌุฉ
+bash scripts/verify.sh                                                   # ูุญูุธ verify-output.txt
 ```
 
-## Þศๆแ วแวไสÞวแ แแใัอแษ 2 (฿แๅว ใุแๆศษ)
-- [ ] Jenkins ํฺใแ ๆีอํ/ใำสÞั.
-- [ ] วแๆีๆแ แแๆวฬๅษ ไวฬอ.
-- [ ] วแศํวไวส (`jenkins_home`) ใำสใัษ ศฺฯ ลฺวฯษ วแสิÛํแ (วฮสศวั Ýฺแํ).
-- [ ] ำแวใษ วแสฮาํไ ใฤ฿ฯษบ แว อะÝ ศํวไวส.
-- [ ] แว รฮุวม สิÛํแ อัฬษ.
-- [ ] วแๆีๆแ วแรๆแํ ใฤใ๘ไ (adminก 50000 Ûํั ใ฿ิๆÝ แแลไสัไส).
-- [ ] `INSTALLATION_REPORT.md` ใอฯห ศวแไสวฦฬ วแÝฺแํษ.
+## ูุจูู ุงูุงูุชูุงู ููู…ุฑุญูุฉ 2 (ูููุง ู…ุทููุจุฉ)
+- [ ] Jenkins ูุนู…ู ูุตุญู/ู…ุณุชูุฑ.
+- [ ] ุงููุตูู ูููุงุฌูุฉ ูุงุฌุญ.
+- [ ] ุงูุจูุงูุงุช (`jenkins_home`) ู…ุณุชู…ุฑุฉ ุจุนุฏ ุฅุนุงุฏุฉ ุงูุชุดุบูู (ุงุฎุชุจุงุฑ ูุนูู).
+- [ ] ุณูุงู…ุฉ ุงูุชุฎุฒูู ู…ุคูุฏุฉุ ูุง ุญุฐู ุจูุงูุงุช.
+- [ ] ูุง ุฃุฎุทุงุก ุชุดุบูู ุญุฑุฌุฉ.
+- [ ] ุงููุตูู ุงูุฃููู ู…ุคู…ู‘ู (adminุ 50000 ุบูุฑ ู…ูุดูู ููุฅูุชุฑูุช).
+- [ ] `INSTALLATION_REPORT.md` ู…ุญุฏุซ ุจุงููุชุงุฆุฌ ุงููุนููุฉ.
 
-**ฺไฯ วแÝิแ:** สๆÞÝก รีแอก รฺฯ วแวฮสศวั. **แว สศฯร `02-Integration/` Þศแ สอÞÞ ฿แ วแศไๆฯ.**
+**ุนูุฏ ุงููุดู:** ุชูููุ ุฃุตูุญุ ุฃุนุฏ ุงูุงุฎุชุจุงุฑ. **ูุง ุชุจุฏุฃ `02-Integration/` ูุจู ุชุญูู ูู ุงูุจููุฏ.**

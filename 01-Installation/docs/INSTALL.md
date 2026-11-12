@@ -1,17 +1,17 @@
-# ╟су╤═с╔ 1 Ч ╩╦╚э╩ Jenkins (╧цф ╩▀╟ус)
+# ╪з┘Д┘Е╪▒╪н┘Д╪й 1 тАФ ╪к╪л╪и┘К╪к Jenkins (╪п┘И┘Ж ╪к┘Г╪з┘Е┘Д)
 
-╟с╩╘█эс ┌сь Ubuntu ╟сх╧▌ (у╦╟с `/opt/jenkins/01-Installation` ├ц уф х╨╟ ╟су╙╟╤ ╚┌╧ ╟сф╙╬):
+╪з┘Д╪к╪┤╪║┘К┘Д ╪╣┘Д┘Й Ubuntu ╪з┘Д┘З╪п┘Б (┘Е╪л╪з┘Д `/opt/jenkins/01-Installation` ╪г┘И ┘Е┘Ж ┘З╪░╪з ╪з┘Д┘Е╪│╪з╪▒ ╪и╪╣╪п ╪з┘Д┘Ж╪│╪о):
 ```bash
 cd 01-Installation
 cp .env.example .env && chmod 600 .env
-# ╤╟╠┌ JENKINS_HTTP_PORT/JENKINS_AGENT_PORT ц╩┌╟╤╓ ╟суф╟▌╨
+# ╪▒╪з╪м╪╣ JENKINS_HTTP_PORT/JENKINS_AGENT_PORT ┘И╪к╪╣╪з╪▒╪╢ ╪з┘Д┘Е┘Ж╪з┘Б╪░
 bash scripts/preflight.sh
 docker compose config
 docker compose up -d
 docker exec jenkins cat /var/jenkins_home/secrets/initialAdminPassword
-bash scripts/verify.sh   # эс╩▐╪ ├╧с╔ сс╩▐╤э╤
+bash scripts/verify.sh   # ┘К┘Д╪к┘В╪╖ ╪г╪п┘Д╪й ┘Д┘Д╪к┘В╪▒┘К╪▒
 ```
 
-- ╟с╚э╟ф╟╩ ╧╟╞у╔ ▌э volume `jenkins_home`. **с╟ ╩═╨▌** ╟с═╟цэ╔/╟с▄ volume.
-- ▐э°╧ ╟суф▌╨ `50000` ╚╠╧╟╤ ф╟╤э║ с╟ ╩┌╤╓ Jenkins сс┼ф╩╤ф╩ ╧цф ═у╟э╔ (╟су╤═с╔ 2/Traefik с╟═▐Ё╟ ╚┌╧ ф╠╟═ ╟с╩╦╚э╩).
-- ╚┌╧ ╟с╟╬╩╚╟╤╟╩ ╟с▌┌сэ╔: ═╧°╦ `INSTALLATION_REPORT.md`. **с╟ ╩ф╩▐с ссу╤═с╔ 2 ┼с╟ ╚ф╠╟═ уц╦▐.**
+- ╪з┘Д╪и┘К╪з┘Ж╪з╪к ╪п╪з╪ж┘Е╪й ┘Б┘К volume `jenkins_home`. **┘Д╪з ╪к╪н╪░┘Б** ╪з┘Д╪н╪з┘И┘К╪й/╪з┘Д┘А volume.
+- ┘В┘К┘С╪п ╪з┘Д┘Е┘Ж┘Б╪░ `50000` ╪и╪м╪п╪з╪▒ ┘Ж╪з╪▒┘К╪Ы ┘Д╪з ╪к╪╣╪▒╪╢ Jenkins ┘Д┘Д╪е┘Ж╪к╪▒┘Ж╪к ╪п┘И┘Ж ╪н┘Е╪з┘К╪й (╪з┘Д┘Е╪▒╪н┘Д╪й 2/Traefik ┘Д╪з╪н┘В┘Л╪з ╪и╪╣╪п ┘Ж╪м╪з╪н ╪з┘Д╪к╪л╪и┘К╪к).
+- ╪и╪╣╪п ╪з┘Д╪з╪о╪к╪и╪з╪▒╪з╪к ╪з┘Д┘Б╪╣┘Д┘К╪й: ╪н╪п┘С╪л `INSTALLATION_REPORT.md`. **┘Д╪з ╪к┘Ж╪к┘В┘Д ┘Д┘Д┘Е╪▒╪н┘Д╪й 2 ╪е┘Д╪з ╪и┘Ж╪м╪з╪н ┘Е┘И╪л┘В.**

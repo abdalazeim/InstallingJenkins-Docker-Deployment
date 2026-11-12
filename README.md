@@ -42,8 +42,24 @@ docker compose up -d
 sleep 20 && docker compose ps
 
 # 5) First access — complete Setup Wizard via browser (trusted network/VPN), create admin
+
+Open `http://<الخادم>:8080` في المتصفح. عند شاشة "Unlock Jenkins" (فتح القفل)، استخرج كلمة السر الأولية من داخل الحاوية:
+
+```bash
+docker exec jenkins cat /var/jenkins_home/secrets/initialAdminPassword
+```
+
+أو من سجلات الحاوية:
+
+```bash
+docker logs jenkins 2>&1 | grep -i "initialAdminPassword"
+```
+
+انسخ كلمة السر والصقها في شاشة فتح القفل، ثم أكمل إعداد `Setup Wizard` وأنشئ `admin` — لا تضف أي تكاملات في Phase 1.
+
+```bash
 docker exec jenkins curl -fsS http://localhost:8080/login >/dev/null && echo UI_OK
-docker exec jenkins cat /var/jenkins_home/secrets/initialAdminPassword   # first run only
+```
 
 # 6) Verify — restart persistence + jenkins_home + logs (writes verify-output.txt)
 bash scripts/verify.sh
